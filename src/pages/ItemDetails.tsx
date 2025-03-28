@@ -728,7 +728,6 @@
 // export default ItemDetails;
 
 
-
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
@@ -749,7 +748,9 @@ const ItemDetails = () => {
   const [selectedCombination, setSelectedCombination] = useState(null);
   const { addToCart } = useCart();
   const [slideDirection, setSlideDirection] = useState(null);
+  const [showNavButtons, setShowNavButtons] = useState(true);
   const contentRef = useRef(null);
+  const inactivityTimerRef = useRef(null);
 
   const parsePrice = (price) => {
     if (price === null || price === undefined) {
@@ -769,6 +770,37 @@ const ItemDetails = () => {
     console.warn(`Unexpected price type: ${typeof price}`);
     return 0;
   };
+
+  const resetInactivityTimer = () => {
+    setShowNavButtons(true);
+    clearTimeout(inactivityTimerRef.current);
+    inactivityTimerRef.current = setTimeout(() => {
+      setShowNavButtons(false);
+    }, 2000);
+  };
+
+  useEffect(() => {
+    const handleActivity = () => {
+      resetInactivityTimer();
+    };
+
+    resetInactivityTimer();
+    
+    window.addEventListener('mousemove', handleActivity);
+    window.addEventListener('mousedown', handleActivity);
+    window.addEventListener('touchstart', handleActivity);
+    window.addEventListener('scroll', handleActivity);
+    window.addEventListener('keypress', handleActivity);
+
+    return () => {
+      clearTimeout(inactivityTimerRef.current);
+      window.removeEventListener('mousemove', handleActivity);
+      window.removeEventListener('mousedown', handleActivity);
+      window.removeEventListener('touchstart', handleActivity);
+      window.removeEventListener('scroll', handleActivity);
+      window.removeEventListener('keypress', handleActivity);
+    };
+  }, []);
 
   const loadItemData = async () => {
     try {
@@ -819,7 +851,6 @@ const ItemDetails = () => {
   const handleAddToCart = () => {
     if (!item) return;
 
-    // Dismiss any existing toast before showing new one
     toast.dismiss();
 
     const cartItem = {
@@ -845,22 +876,17 @@ const ItemDetails = () => {
         mainItemId: item.id
       };
       addToCart(comboItem);
-      toastMessage += ` and ${comboQuantity} ${selectedCombination.name}`;
+      
       setSelectedCombination(null);
       setComboQuantity(1);
     }
     
-    // Show single toast with all information
-    toast.success(toastMessage, {
-      duration: 3000,
-      position: 'bottom-center'
-    });
+    
   };
 
   const handleAddCombinationToCart = () => {
     if (!selectedCombination) return;
     
-    // Dismiss any existing toast before showing new one
     toast.dismiss();
 
     const comboItem = {
@@ -875,10 +901,7 @@ const ItemDetails = () => {
     
     addToCart(comboItem);
     
-    toast.success(`Added ${comboQuantity} ${selectedCombination.name} to cart`, {
-      duration: 3000,
-      position: 'bottom-center'
-    });
+    
     
     setShowCombinationsModal(false);
     setSelectedCombination(null);
@@ -957,18 +980,27 @@ const ItemDetails = () => {
   }
 
   return (
-    <div className="pt-20 px-4 max-w-7xl mx-auto relative overflow-hidden">
-      {/* Desktop navigation arrows */}
-      <div className="hidden md:flex absolute top-1/2 left-4 right-4 -translate-y-1/2 justify-between z-10">
+    <div 
+      className="pt-20 px-4 max-w-7xl mx-auto relative overflow-hidden"
+      onMouseMove={resetInactivityTimer}
+      onTouchStart={resetInactivityTimer}
+    >
+      <div className={`hidden md:flex absolute top-1/2 left-4 right-4 -translate-y-1/2 justify-between z-10 transition-opacity duration-300 ${showNavButtons ? 'opacity-100' : 'opacity-0'}`}>
         <button 
-          onClick={() => navigateToAdjacentItem('prev')}
+          onClick={() => {
+            resetInactivityTimer();
+            navigateToAdjacentItem('prev');
+          }}
           className="p-3 rounded-full bg-white/80 shadow-lg hover:bg-white transition-colors backdrop-blur-sm"
           aria-label="Previous item"
         >
           <ChevronLeft className="w-6 h-6" />
         </button>
         <button 
-          onClick={() => navigateToAdjacentItem('next')}
+          onClick={() => {
+            resetInactivityTimer();
+            navigateToAdjacentItem('next');
+          }}
           className="p-3 rounded-full bg-white/80 shadow-lg hover:bg-white transition-colors backdrop-blur-sm"
           aria-label="Next item"
         >
@@ -976,11 +1008,13 @@ const ItemDetails = () => {
         </button>
       </div>
 
-      {/* Mobile side navigation buttons */}
-      <div className="md:hidden fixed inset-0 pointer-events-none z-10">
+      <div className={`md:hidden fixed inset-0 pointer-events-none z-10 transition-opacity duration-300 ${showNavButtons ? 'opacity-100' : 'opacity-0'}`}>
         <div className="absolute left-2 top-1/2 -translate-y-1/2 pointer-events-auto">
           <button 
-            onClick={() => navigateToAdjacentItem('prev')}
+            onClick={() => {
+              resetInactivityTimer();
+              navigateToAdjacentItem('prev');
+            }}
             className="p-3 rounded-full bg-white/90 shadow-lg hover:bg-white transition-colors"
             aria-label="Previous item"
           >
@@ -989,7 +1023,10 @@ const ItemDetails = () => {
         </div>
         <div className="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-auto">
           <button 
-            onClick={() => navigateToAdjacentItem('next')}
+            onClick={() => {
+              resetInactivityTimer();
+              navigateToAdjacentItem('next');
+            }}
             className="p-3 rounded-full bg-white/90 shadow-lg hover:bg-white transition-colors"
             aria-label="Next item"
           >
@@ -998,7 +1035,6 @@ const ItemDetails = () => {
         </div>
       </div>
 
-      {/* Content with slide animation */}
       <div 
         ref={contentRef}
         className={`transition-all duration-300 ease-in-out ${slideDirection || ''}`}
@@ -1087,7 +1123,6 @@ const ItemDetails = () => {
         </div>
       </div>
 
-      {/* Combinations Modal */}
       {showCombinationsModal && selectedCombination && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-2xl p-4 sm:p-6 max-w-md w-full max-h-[90vh] overflow-y-auto">
