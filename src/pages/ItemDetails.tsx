@@ -1080,7 +1080,7 @@ const ItemDetails = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={handleAddToCart}
-                className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-teal-600 transition-colors"
+                className="flex-1 bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors"
               >
                 Add to Cart
               </button>
@@ -1182,7 +1182,7 @@ const ItemDetails = () => {
               
               <button
                 onClick={handleAddCombinationToCart}
-                className="w-full bg-orange-500 text-white py-3 rounded-full hover:bg-teal-600 transition-colors"
+                className="w-full bg-orange-500 text-white py-3 rounded-full hover:bg-orange-600 transition-colors"
               >
                 Add Combination to Cart
               </button>
