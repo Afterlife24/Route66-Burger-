@@ -729,7 +729,7 @@
 
 
 import React, { useState, useEffect, useRef } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { loadMenuData } from '../pictures';
 import { Plus, Minus, X, ShoppingCart, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -739,6 +739,7 @@ import { useSwipeable } from 'react-swipeable';
 const ItemDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [item, setItem] = useState(null);
   const [allItems, setAllItems] = useState([]);
   const [quantity, setQuantity] = useState(1);
@@ -751,6 +752,7 @@ const ItemDetails = () => {
   const [showNavButtons, setShowNavButtons] = useState(true);
   const contentRef = useRef(null);
   const inactivityTimerRef = useRef(null);
+  const previousPathRef = useRef(location.state?.from || '/menu');
 
   const parsePrice = (price) => {
     if (price === null || price === undefined) {
@@ -880,8 +882,6 @@ const ItemDetails = () => {
       setSelectedCombination(null);
       setComboQuantity(1);
     }
-    
-    
   };
 
   const handleAddCombinationToCart = () => {
@@ -900,8 +900,6 @@ const ItemDetails = () => {
     };
     
     addToCart(comboItem);
-    
-    
     
     setShowCombinationsModal(false);
     setSelectedCombination(null);
@@ -943,7 +941,10 @@ const ItemDetails = () => {
     }
     
     setTimeout(() => {
-      navigate(`/item/${allItems[newIndex].id}`);
+      navigate(`/item/${allItems[newIndex].id}`, {
+        state: { from: previousPathRef.current },
+        replace: true  // This prevents adding to history stack
+      });
       setQuantity(1);
       setSlideDirection(direction === 'prev' ? 'slide-in-left' : 'slide-in-right');
       
@@ -1051,11 +1052,14 @@ const ItemDetails = () => {
           </div>
           
           <div className="space-y-6">
-            <h1 className="text-2xl md:text-xl font-bold text-gray-800">{item.name}</h1>
-            <p className="text-gray-600 text-base md:text-lg">{item.desc}</p>
-            <div className="text-2xl md:text-3xl font-bold text-orange-500">
-              €{parsePrice(item.price).toFixed(2)}
+            <div>
+              <h1 className="text-2xl md:text-xl font-bold text-gray-800">{item.name}</h1>
+              <div className="text-2xl md:text-3xl font-bold text-orange-500 mt-2">
+                €{parsePrice(item.price).toFixed(2)}
+              </div>
             </div>
+            
+            <p className="text-gray-600 text-base md:text-lg">{item.desc}</p>
             
             <div className="flex items-center space-x-4">
               <button

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Clock, MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
 import { loadMenuData } from '../pictures';
 import toast from 'react-hot-toast';
+import scrollIcon from '../assets/img6.jpg'; // Adjust path as needed
 
 const LandingPage = () => {
   const [categories, setCategories] = useState([]);
@@ -217,6 +218,20 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Floating Button with Image */}
+{/* <div className="fixed bottom-10 right-6 z-50">
+  <button className="p-3 shadow-lg">
+    <img 
+      src={scrollIcon} 
+      alt="Scroll Button"
+      className="w-19 h-16 bg-transparent" // Ensures no background color
+    />
+  </button>
+</div> */}
+
+
+
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12">
