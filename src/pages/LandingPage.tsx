@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { ChevronRight, Star, Clock, MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
 import { loadMenuData } from '../pictures';
 import toast from 'react-hot-toast';
-import scrollIcon from '../assets/img6.jpg'; // Adjust path as needed
 
 const LandingPage = () => {
   const [categories, setCategories] = useState([]);
@@ -52,7 +51,7 @@ const LandingPage = () => {
       >
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to Route66</h1>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to FoodieSpot</h1>
             <p className="text-xl md:text-2xl mb-8">Experience the finest flavors in town</p>
             <Link
               to="/menu"
@@ -218,20 +217,6 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-
-      {/* Floating Button with Image */}
-{/* <div className="fixed bottom-10 right-6 z-50">
-  <button className="p-3 shadow-lg">
-    <img 
-      src={scrollIcon} 
-      alt="Scroll Button"
-      className="w-19 h-16 bg-transparent" // Ensures no background color
-    />
-  </button>
-</div> */}
-
-
-
 
       {/* Footer */}
       <footer className="bg-gray-800 text-white py-12">
