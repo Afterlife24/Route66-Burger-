@@ -15,9 +15,8 @@ const LandingPage = () => {
       try {
         const menuData = await loadMenuData();
         const uniqueCategories = ['All', ...new Set(menuData.map(item => item.category))];
-        setCategories(uniqueCategories.slice(0, 5)); // Get 'All' + first 4 categories
+        setCategories(uniqueCategories.slice(0, 5));
 
-        // Get the first image for each category
         const images = {};
         menuData.forEach(item => {
           if (!images[item.category] && item.image) {
@@ -36,7 +35,7 @@ const LandingPage = () => {
 
   const handleSubscribe = (e) => {
     e.preventDefault();
-    toast.success('Thanks for subscribing!');
+    toast.success('Merci pour votre abonnement !');
     setEmail('');
   };
 
@@ -51,13 +50,13 @@ const LandingPage = () => {
       >
         <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
           <div className="text-center text-white px-4">
-            <h1 className="text-4xl md:text-6xl font-bold mb-4">Welcome to FoodieSpot</h1>
-            <p className="text-xl md:text-2xl mb-8">Experience the finest flavors in town</p>
+            <h1 className="text-4xl md:text-6xl font-bold mb-4">Bienvenue chez Route66</h1>
+            <p className="text-xl md:text-2xl mb-8">Découvrez les meilleures saveurs en ville</p>
             <Link
               to="/menu"
               className="bg-orange-500 text-white px-8 py-3 rounded-full hover:bg-orange-600 transition duration-300 inline-block"
             >
-              View Menu
+              Voir le Menu
             </Link>
           </div>
         </div>
@@ -65,7 +64,7 @@ const LandingPage = () => {
 
       {/* Featured Categories */}
       <div className="max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-3xl font-bold text-center mb-12">Popular Categories</h2>
+        <h2 className="text-3xl font-bold text-center mb-12">Catégories Populaires</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {loading ? (
             <div className="col-span-full flex justify-center">
@@ -100,23 +99,23 @@ const LandingPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <Star className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Quality Food</h3>
-              <p className="text-gray-600">Made with premium ingredients</p>
+              <h3 className="text-xl font-semibold mb-2">Nourriture de Qualité</h3>
+              <p className="text-gray-600">Préparée avec des ingrédients premium</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <Clock className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Fast Delivery</h3>
-              <p className="text-gray-600">Hot food at your doorstep</p>
+              <h3 className="text-xl font-semibold mb-2">Livraison Rapide</h3>
+              <p className="text-gray-600">Plats chauds livrés chez vous</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <MapPin className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Best Location</h3>
-              <p className="text-gray-600">Easy to find and access</p>
+              <h3 className="text-xl font-semibold mb-2">Meilleur Emplacement</h3>
+              <p className="text-gray-600">Facile à trouver et accessible</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md text-center">
               <Phone className="w-12 h-12 text-orange-500 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">24/7 Support</h3>
-              <p className="text-gray-600">Always here to help</p>
+              <h3 className="text-xl font-semibold mb-2">Support 24h/24</h3>
+              <p className="text-gray-600">Toujours là pour vous aider</p>
             </div>
           </div>
         </div>
@@ -126,24 +125,23 @@ const LandingPage = () => {
       <div className="max-w-7xl mx-auto px-4 py-16">
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <h2 className="text-3xl font-bold mb-6">Our Story</h2>
+            <h2 className="text-3xl font-bold mb-6">Notre Histoire</h2>
             <p className="text-gray-600 mb-6">
-              At FoodieSpot, we believe in bringing the finest culinary experiences to your table. 
-              Our passion for food and commitment to quality has made us a favorite destination for 
-              food lovers.
+              Chez Route66, nous croyons à l’expérience culinaire d'exception. Notre passion pour la
+              cuisine et notre engagement envers la qualité font de nous une destination incontournable.
             </p>
             <ul className="space-y-4">
               <li className="flex items-center">
                 <Star className="w-5 h-5 text-orange-500 mr-2" />
-                <span>Fresh ingredients sourced daily</span>
+                <span>Ingrédients frais chaque jour</span>
               </li>
               <li className="flex items-center">
                 <Star className="w-5 h-5 text-orange-500 mr-2" />
-                <span>Expert chefs with years of experience</span>
+                <span>Chefs expérimentés</span>
               </li>
               <li className="flex items-center">
                 <Star className="w-5 h-5 text-orange-500 mr-2" />
-                <span>Wide variety of cuisines</span>
+                <span>Large choix de cuisines</span>
               </li>
             </ul>
           </div>
@@ -161,36 +159,36 @@ const LandingPage = () => {
       <div className="bg-gray-50 py-16">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Visit Us</h2>
-            <p className="text-gray-600">Find us at our convenient location</p>
+            <h2 className="text-3xl font-bold mb-4">Rendez-nous visite</h2>
+            <p className="text-gray-600">Trouvez-nous à notre adresse pratique</p>
           </div>
           
           <div className="grid md:grid-cols-2 gap-8">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <h3 className="text-xl font-bold mb-4">Contact Information</h3>
+              <h3 className="text-xl font-bold mb-4">Informations de Contact</h3>
               <div className="space-y-4">
                 <div className="flex items-center">
                   <MapPin className="w-5 h-5 text-orange-500 mr-3" />
-                  <span>123 Foodie Street, Cuisine City, FC 12345</span>
+                  <span>2 Rue Paul Bellamy - 44000 Nantes, France</span>
                 </div>
                 <div className="flex items-center">
                   <Phone className="w-5 h-5 text-orange-500 mr-3" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>02 52 10 18 87</span>
                 </div>
                 <div className="flex items-center">
                   <Mail className="w-5 h-5 text-orange-500 mr-3" />
-                  <span>info@foodiespot.com</span>
+                  <span>route66burger@yahoo.com</span>
                 </div>
               </div>
 
               <form onSubmit={handleSubscribe} className="mt-6">
-                <h4 className="font-semibold mb-3">Subscribe to our newsletter</h4>
+                <h4 className="font-semibold mb-3">Abonnez-vous à notre newsletter</h4>
                 <div className="flex gap-2">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Enter your email"
+                    placeholder="Entrez votre e-mail"
                     className="flex-1 px-4 py-2 border rounded-full focus:outline-none focus:ring-2 focus:ring-orange-500"
                     required
                   />
@@ -206,7 +204,7 @@ const LandingPage = () => {
 
             <div className="h-[400px] rounded-lg overflow-hidden shadow-lg">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d387193.30596698663!2d-74.25987368715491!3d40.69714941932609!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c24fa5d33f083b%3A0xc80b8f06e177fe62!2sNew%20York%2C%20NY%2C%20USA!5e0!3m2!1sen!2s!4v1647043276541!5m2!1sen!2s"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2709.7860693197867!2d-1.5577077237925776!3d47.22076807115696!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4805eea3d518cda5%3A0x8927ca7dc5988246!2s2%20Rue%20Paul%20Bellamy%2C%2044000%20Nantes%2C%20France!5e0!3m2!1sen!2sin!4v1744732052374!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
@@ -223,13 +221,13 @@ const LandingPage = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div>
-              <h3 className="text-xl font-bold mb-4">FoodieSpot</h3>
+              <h3 className="text-xl font-bold mb-4">Route66</h3>
               <p className="text-gray-400">
-                Bringing the finest culinary experiences to your table since 2020.
+                Apportant les meilleures expériences culinaires.
               </p>
             </div>
             <div>
-              <h3 className="text-xl font-bold mb-4">Quick Links</h3>
+              <h3 className="text-xl font-bold mb-4">Liens Rapides</h3>
               <ul className="space-y-2">
                 <li>
                   <Link to="/menu" className="text-gray-400 hover:text-white transition duration-300">
@@ -238,21 +236,21 @@ const LandingPage = () => {
                 </li>
                 <li>
                   <Link to="/cart" className="text-gray-400 hover:text-white transition duration-300">
-                    Cart
+                    Panier
                   </Link>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-bold mb-4">Opening Hours</h3>
+              <h3 className="text-xl font-bold mb-4">Heures d'ouverture</h3>
               <ul className="text-gray-400">
-                <li>Monday - Friday: 9:00 AM - 10:00 PM</li>
-                <li>Saturday - Sunday: 10:00 AM - 11:00 PM</li>
+                <li>Lundi - Vendredi : 9h00 - 22h00</li>
+                <li>Samedi - Dimanche : 10h00 - 23h00</li>
               </ul>
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 FoodieSpot. All rights reserved.</p>
+            <p>&copy; 2024 Route66. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
