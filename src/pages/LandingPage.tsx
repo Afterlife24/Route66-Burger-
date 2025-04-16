@@ -1,23 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Star, Clock, MapPin, Phone, Mail, ArrowRight } from 'lucide-react';
+import { ChevronRight, Star, Clock, MapPin, Phone, Mail, ArrowRight, X } from 'lucide-react';
 import { loadMenuData } from '../pictures';
 import toast from 'react-hot-toast';
+import promoBanner from '../assets/img6.jpg';
 
-const LandingPage = () => {
-  const [categories, setCategories] = useState([]);
-  const [categoryImages, setCategoryImages] = useState({});
-  const [loading, setLoading] = useState(true);
-  const [email, setEmail] = useState('');
+interface MenuItem {
+  category: string;
+  image?: string;
+  // Add other properties if needed
+}
+
+const LandingPage: React.FC = () => {
+  const [categories, setCategories] = useState<string[]>([]);
+  const [categoryImages, setCategoryImages] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState<boolean>(true);
+  const [email, setEmail] = useState<string>('');
+  const [showPromoBanner, setShowPromoBanner] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const menuData = await loadMenuData();
+        const menuData: MenuItem[] = await loadMenuData();
         const uniqueCategories = ['All', ...new Set(menuData.map(item => item.category))];
         setCategories(uniqueCategories.slice(0, 5));
 
-        const images = {};
+        const images: Record<string, string> = {};
         menuData.forEach(item => {
           if (!images[item.category] && item.image) {
             images[item.category] = item.image;
@@ -33,14 +41,39 @@ const LandingPage = () => {
     fetchCategories();
   }, []);
 
-  const handleSubscribe = (e) => {
+  const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
     toast.success('Merci pour votre abonnement !');
     setEmail('');
   };
 
+  const handlePromoClick = () => {
+    console.log('Promo banner clicked');
+    // You could add navigation or other actions here
+    // Example: navigate('/promo-page');
+  };
+
+  const closePromoBanner = () => {
+    setShowPromoBanner(false);
+  };
+
   return (
-    <div className="pt-16">
+    <div className="pt-16 relative">
+      {/* Floating Promo Banner - Only visible on Landing Page */}
+      {showPromoBanner && (
+        <div className="fixed bottom-6 right-6 z-50 shadow-xl rounded-lg overflow-hidden transition-all duration-300 hover:shadow-2xl bg-white">
+  <div className="relative">
+    <img 
+      src={promoBanner} 
+      alt="Special Offer" 
+      className="max-h-[100px] w-auto cursor-pointer"
+      onClick={() => window.location.href = 'https://route66-route66.gofastapi.com/menu'}
+    />
+  </div>
+</div>
+
+      )}
+
       {/* Hero Section */}
       <div 
         className="h-[600px] bg-cover bg-center relative"
@@ -127,7 +160,7 @@ const LandingPage = () => {
           <div>
             <h2 className="text-3xl font-bold mb-6">Notre Histoire</h2>
             <p className="text-gray-600 mb-6">
-              Chez Route66, nous croyons à l’expérience culinaire d'exception. Notre passion pour la
+              Chez Route66, nous croyons à l'expérience culinaire d'exception. Notre passion pour la
               cuisine et notre engagement envers la qualité font de nous une destination incontournable.
             </p>
             <ul className="space-y-4">
@@ -195,6 +228,7 @@ const LandingPage = () => {
                   <button
                     type="submit"
                     className="bg-orange-500 text-white px-6 py-2 rounded-full hover:bg-orange-600 transition duration-300"
+                    aria-label="Subscribe to newsletter"
                   >
                     <ArrowRight className="w-5 h-5" />
                   </button>
@@ -210,6 +244,7 @@ const LandingPage = () => {
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
+                title="Restaurant Location"
               ></iframe>
             </div>
           </div>
@@ -250,7 +285,7 @@ const LandingPage = () => {
             </div>
           </div>
           <div className="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Route66. Tous droits réservés.</p>
+            <p>&copy; {new Date().getFullYear()} Route66. Tous droits réservés.</p>
           </div>
         </div>
       </footer>
