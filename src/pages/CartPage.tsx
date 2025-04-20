@@ -78,7 +78,7 @@ const CartPage = () => {
         addToOrderHistory(orderData);
         clearCart();
         setOrderSent(true);
-        setSuccessMessage(`Order sent successfully! Your Token ID is ${tokenId}`);
+        setSuccessMessage(`Order sent successfully! Your Token ID is ${tokenId} .Go and collect your order from the restaurant.`);
         toast.success('Order placed successfully!');
       } else {
         const errorData = await response.json();
@@ -247,15 +247,11 @@ const CartPage = () => {
                   <div key={order.orderId} className="bg-white rounded-lg shadow p-6">
                     <div className="flex justify-between items-start mb-4">
                       <div>
-                        <h3 className="font-bold text-lg">Order #{order.orderId}</h3>
+                        <h3 className="font-bold text-lg">Token ID: {order.tokenId}</h3>
                         <p className="text-gray-500 text-sm">
                           {new Date(order.date).toLocaleString()}
                         </p>
-                        {order.tokenId && (
-                          <p className="text-gray-500 text-sm mt-1">
-                            Token ID: {order.tokenId}
-                          </p>
-                        )}
+                        
                       </div>
                       <div className="text-right">
                         <p className="font-bold">Total: ${order.total}</p>
