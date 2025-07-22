@@ -67,7 +67,7 @@ const LandingPage: React.FC = () => {
       src={promoBanner} 
       alt="Special Offer" 
       className="max-h-[100px] w-auto cursor-pointer"
-      onClick={() => window.location.href = 'https://route66-route66.gofastapi.com/menu'}
+      onClick={() => window.location.href = 'https://www.route66-route66.afterlife.org.in/menu'}
     />
   </div>
 </div>
