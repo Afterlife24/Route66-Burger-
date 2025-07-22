@@ -59,7 +59,7 @@ const CartPage = () => {
     try {
       setIsLoading(true);
       // Send order to backend
-      const response = await fetch("https://route66-server.gofastapi.com/sendOrder", {
+      const response = await fetch("https://5fz8cdygvi.execute-api.eu-west-3.amazonaws.com/sendOrder", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
